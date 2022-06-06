@@ -1,0 +1,31 @@
+syntax = "proto3";
+package chat;
+
+message ChatMessage {
+    string from = 1;
+    string msg = 2;
+    string time = 3;
+}
+
+message User {
+    string id = 1;
+    string name = 2;
+}
+
+message UserList {
+    repeated User users = 1;
+}
+
+message JoinResponse {
+    int32 error = 1;
+    string msg = 2;
+}
+
+message Empty {}
+
+service Chatter {
+    rpc join(User) returns (JoinResponse) {}
+    rpc sendMsg(ChatMessage) returns (Empty) {}
+    rpc ReceiveMsg(Empty) returns (stream ChatMessage) {}
+    rpc getAllUsers(Empty) returns (UserList) {}
+}
